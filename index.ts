@@ -31,9 +31,9 @@ class VariableReplacer {
     }
 
     private replaceVariablesInString(str: string): string {
-        const json = JsonExtensions.TryGetJson(str);
-        if (json) {
-            const replaceResult = this.replace(JSON.parse(str));
+        const parseResult = JsonExtensions.TryParseJson(str);
+        if (parseResult) {
+            const replaceResult = this.replace(parseResult);
             return JSON.stringify(replaceResult);
         } else {
             return StringFormatter.format(str, this.mappingConfig);
@@ -70,7 +70,7 @@ class MappingConfig {
 }
 
 class JsonExtensions {
-    public static TryGetJson(str: string): any {
+    public static TryParseJson(str: string): any {
         let result = null;
 
         try {
